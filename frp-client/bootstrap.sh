@@ -15,7 +15,7 @@ function select_machine() {
             machine="amd64"
         ;;
         "armhf")
-            machine="arm"
+            machine="arm_hf"
         ;;
         "armv7")
             machine="arm"
