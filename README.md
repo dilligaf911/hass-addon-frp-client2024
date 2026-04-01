@@ -1,65 +1,34 @@
-[![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)](https://github.com/huxiaoxu2019/hass-addon-frp-client/tree/v1.0.0) [![Discord](https://dcbadge.vercel.app/api/server/3DKtHRWv?style=flat&compact=true)](https://discord.gg/uHPnqBSq)
+# FRP Client Add-on
 
-⚠️ **Note: This README corresponds to v1.0.0 and may not fully reflect the current state of the repository. Please change to the specific tag for the most accurate information.**
+Home Assistant add-on that runs `frpc` and reads its configuration from `/share/frpc.toml`.
 
-# Hass Addon FRP Client
-Home Assistant Community Add-on: FRP Client
+## Configuration
 
-You can leverage this add-on to achieve remote access to local Home Assistant OS by port forwarding.
+The add-on no longer uses Home Assistant add-on options from `config.yaml`.
 
-## Architecture
-<img width="800" src="https://github.com/huxiaoxu2019/hass-addon-frp-client/assets/5491423/58b8770e-dca5-4353-af27-e45494f78278">
+All runtime configuration is managed through:
 
-## Installation
-- Go to Settings -> Add-ons -> Add-on Store (bottom right)
-- Click Repositories (top right)
-<img width="600" src="https://github.com/huxiaoxu2019/hass-addon-frp-client/assets/5491423/699fac45-2b53-4213-811e-5fd0c4362b3b">
+`/share/frpc.toml`
 
-- Add the current repository `https://github.com/huxiaoxu2019/hass-addon-frp-client/`
-<img width="600" src="https://github.com/huxiaoxu2019/hass-addon-frp-client/assets/5491423/91e886d5-dc3b-40a3-951a-9295687cf3f7">
+If `/share/frpc.toml` does not exist yet, the add-on creates it from the bundled example on first start. Edit that file and restart the add-on.
 
-- Wait and refresh the Add-on Store page, then you can see one new add-on `Frp Client`, click it and install
-<img width="600" src="https://github.com/huxiaoxu2019/hass-addon-frp-client/assets/5491423/0bad82a7-f535-46b1-acf6-1a4151fb6420">
-<br />
-<img width="600" src="https://github.com/huxiaoxu2019/hass-addon-frp-client/assets/5491423/c0941c9e-6fff-40ad-8d7b-f89d4b937f92">
-<br />
-<img width="600" src="https://github.com/huxiaoxu2019/hass-addon-frp-client/assets/5491423/bee156da-282a-4831-9803-8e45f4331c2c">
+The default example includes:
 
-- Add the configurations shown as below in your `configurations.yaml` with File Editor addon
-```
-http:
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - 0.0.0.0/0
-```
+- FRP server address and port
+- Token authentication
+- Web UI settings
+- A sample HTTP proxy for Home Assistant on port `8123`
 
-It's better to modify the `0.0.0.0/0` to your proxy server IP
+## Basic Setup
 
-<img width="600"  src="https://github.com/huxiaoxu2019/hass-addon-frp-client/assets/5491423/47c4e863-1481-486a-9acb-41019c388fde">
-<br />
+1. Install the add-on from this repository.
+2. Start the add-on once so `/share/frpc.toml` is created if it is missing.
+3. Open `/share/frpc.toml` in the Home Assistant share folder.
+4. Replace the example values with your real FRP client configuration.
+5. Restart the add-on.
 
-_Notes for Chinese Users: If the above steps fail, please try again as GitHub resource access may be unstable. If the issue persists, you can check the specific logs for troubleshooting by using the command `ha su logs`._
+## Notes
 
-## Usage Tutorial
-<a href="https://www.youtube.com/watch?v=1UTcnqsiDg8">
-  <img width="800" src="https://github.com/huxiaoxu2019/hass-addon-frp-client/assets/5491423/d1f0820b-d0c4-450b-b476-cdae386b7e5d">
-</a>
-
-## Contribution
-Welcome and appreciate contributions from the Home Assistant community. If you have ideas for improvements, bug fixes, or new features, feel free to contribute by submitting a pull request (PR). Before you start, please make sure to follow these guidelines:
-
-### Bug Reports
-If you encounter any bugs or have ideas for new features, please open an issue on the issue tracker.
-
-### Pull Request
-- Clearly describe the purpose of your changes in the pull request
-- Provide step-by-step instructions for testing your changes
-- Ensure that your changes do not introduce new issues
-
-### Code of Conduct
-Please note that this project follows [Home Assistant's Code of Conduct](https://www.home-assistant.io/code_of_conduct/). Be respectful and considerate in all interactions.
-
-## Author
-Xiaoxu Hu admin@ihuxu.com
-
-Special thanks to: [@steplov](https://github.com/steplov) for the setup script
+- Logs are written to `/share/frpc.log`.
+- The add-on starts `frpc` with `frpc -c /share/frpc.toml`.
+- `frps.toml` is not part of this add-on anymore because the add-on only runs the FRP client.
