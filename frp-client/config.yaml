@@ -1,6 +1,6 @@
 name: "FRP Client"
 description: "FRP client for Home Assistant. Configuration is managed through /share/frpc.toml"
-version: "1.0.3"
+version: "1.0.4"
 slug: "frp_client"
 host_network: true
 startup: application
